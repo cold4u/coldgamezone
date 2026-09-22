@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ColdGameZone | The Ultimate Cyber Arcade & Web Gaming Portal</title>
+    <meta name="description" content="Play 29 high-octane cyber arcade games directly in your browser. From fighting, racing, and stealth to deep deckbuilders, physics pinball, and block puzzles. Zero installs, pure performance.">
+    <meta property="og:title" content="ColdGameZone | Cyber Arcade Portal">
+    <meta property="og:description" content="29 studio-grade browser games with Canvas 2D vector graphics and Web Audio synthesizers.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="css/portal.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+    <!-- Sticky Portal Header -->
+    <header class="portal-header">
+        <div class="header-container">
+            <a href="#" class="brand-logo" onclick="window.location.hash=''; window.location.reload();">
+                <span class="brand-badge">ARCADE</span>
+                <span class="brand-name">COLD<span>GAMEZONE</span></span>
+            </a>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search 29 games by title, genre, or keyword (Press '/' to focus)..." autocomplete="off">
+                <button id="searchClear" class="search-clear">✕</button>
+            </div>
+
+            <div class="header-actions">
+                <button id="btnSurprise" class="action-btn surprise-btn" title="Launch a random game!">
+                    <span>🎲</span>
+                    <span>Surprise Me</span>
+                </button>
+                <button id="btnFavoritesFilter" class="action-btn" title="View your bookmarked favorites">
+                    <span>❤️</span>
+                    <span>Favorites</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Filter Bar -->
+        <nav class="categories-bar">
+            <div class="categories-container">
+                <button class="category-pill active" data-category="all">
+                    <span>🌐</span>
+                    <span>All Games (29)</span>
+                </button>
+                <button class="category-pill" data-category="action">
+                    <span>🥊</span>
+                    <span>Action & Combat</span>
+                </button>
+                <button class="category-pill" data-category="racing">
+                    <span>🏎️</span>
+                    <span>Racing & Speed</span>
+                </button>
+                <button class="category-pill" data-category="strategy">
+                    <span>🤖</span>
+                    <span>Strategy & Tactics</span>
+                </button>
+                <button class="category-pill" data-category="puzzle">
+                    <span>🧩</span>
+                    <span>Puzzle & Brain</span>
+                </button>
+                <button class="category-pill" data-category="arcade">
+                    <span>👾</span>
+                    <span>Arcade Classics</span>
+                </button>
+                <button class="category-pill" data-category="adventure">
+                    <span>⛏️</span>
+                    <span>Adventure & Explore</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Portal Body -->
+    <main class="main-layout">
+        <!-- Hero Spotlight: Featured Game -->
+        <section id="heroSpotlight" class="hero-spotlight"></section>
+
+        <!-- Your Favorites Rail -->
+        <section id="favRailSection" class="rail-section hidden">
+            <div class="rail-header">
+                <h2 class="rail-title"><span>❤️</span> Your Favorite Games</h2>
+            </div>
+            <div id="favRailScroll" class="rail-scroll"></div>
+        </section>
+
+        <!-- Recently Played Rail -->
+        <section id="recentRailSection" class="rail-section hidden">
+            <div class="rail-header">
+                <h2 class="rail-title"><span>🕒</span> Recently Played</h2>
+                <button class="rail-clear-btn" onclick="localStorage.removeItem('cgz_recents'); window.portal.recents=[]; window.portal.renderRecentsRail();">Clear History</button>
+            </div>
+            <div id="recentRailScroll" class="rail-scroll"></div>
+        </section>
+
+        <!-- Main Game Catalog -->
+        <section class="catalog-section">
+            <div class="catalog-bar">
+                <span id="catalogCount" class="catalog-count">Showing <strong>29</strong> games</span>
+                <div class="catalog-sort">
+                    <label for="sortSelect" style="font-size: 0.82rem; color: var(--text-muted); margin-right: 6px;">Sort By:</label>
+                    <select id="sortSelect" class="sort-select">
+                        <option value="rating">Top Rated ★</option>
+                        <option value="popular">Most Played 🔥</option>
+                        <option value="az">Alphabetical (A - Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Dynamic 29-Game Grid -->
+            <div id="catalogGrid" class="game-grid"></div>
+        </section>
+    </main>
+
+    <!-- Cinema Theater Game Player Modal -->
+    <div id="theaterModal" class="theater-modal hidden">
+        <div class="theater-header">
+            <div class="theater-game-info">
+                <span id="theaterIcon" class="theater-game-icon">🎮</span>
+                <div>
+                    <h2 id="theaterTitle" class="theater-game-title">Game Title</h2>
+                    <span id="theaterGenre" class="theater-game-genre">GENRE</span>
+                </div>
+            </div>
+
+            <div class="theater-actions">
+                <button id="btnReload" class="theater-btn" title="Restart Game">🔄 Restart</button>
+                <button id="btnFullscreen" class="theater-btn" title="Toggle Fullscreen">⛶ Fullscreen</button>
+                <a id="theaterTabLink" href="#" target="_blank" rel="noopener noreferrer" class="theater-btn" title="Open in Dedicated Tab">Full Tab ↗</a>
+                <button id="btnCloseTheater" class="theater-btn btn-close" title="Close Theater [Esc]">✕ Close</button>
+            </div>
+        </div>
+
+        <div class="theater-body">
+            <div id="theaterIframeFrame" class="theater-iframe-frame">
+                <iframe id="theaterIframe" src="about:blank" class="theater-iframe" title="Game Viewport" allow="autoplay; fullscreen"></iframe>
+            </div>
+
+            <div class="theater-details-card">
+                <p id="theaterDesc" style="color: #c9d1d9; font-size: 0.92rem;"></p>
+                <p id="theaterControls" class="theater-controls-guide" style="font-size: 0.85rem; color: #8b949e;"></p>
+                
+                <div class="theater-similar">
+                    <div class="theater-similar-title">More Like This:</div>
+                    <div id="theaterSimilar" class="theater-similar-chips"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portal Footer -->
+    <footer class="portal-footer">
+        <div class="footer-container">
+            <div>
+                <strong>ColdGameZone</strong> &bull; The Premier Cyber Arcade & Web Gaming Portal
+            </div>
+            <div class="footer-meta">
+                <span>⚡ 29 High-Quality Games</span>
+                <span>•</span>
+                <span>🔒 100% Client-Side</span>
+                <span>•</span>
+                <span>Zero Latency</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/games_data.js"></script>
+    <script src="js/portal.js"></script>
+</body>
+</html>
