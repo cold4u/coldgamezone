@@ -27,6 +27,51 @@
             </div>
 
             <div class="header-actions">
+                <!-- Player Profile & XP Tracker -->
+                <div id="playerProfileCard" class="player-profile-card" title="ColdGameZone Player Profile & Level">
+                    <span id="playerLvlBadge" class="player-lvl-badge">LVL 1</span>
+                    <div class="player-xp-wrap">
+                        <div class="player-xp-meta">
+                            <span>XP</span>
+                            <span id="playerXpText">0 / 150</span>
+                        </div>
+                        <div class="player-xp-bar-track">
+                            <div id="playerXpBar" class="player-xp-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ambient Synthwave Radio -->
+                <div id="synthwaveRadio" class="synthwave-radio" title="Ambient Cyber Synthwave Radio">
+                    <div class="radio-visualizer">
+                        <span class="radio-bar"></span>
+                        <span class="radio-bar"></span>
+                        <span class="radio-bar"></span>
+                        <span class="radio-bar"></span>
+                    </div>
+                    <button id="btnRadioPlay" class="radio-btn" title="Play/Pause Synthwave Radio">▶</button>
+                    <span class="radio-label">SYNTH-88.4</span>
+                    <input type="range" id="radioVol" class="radio-vol" min="0" max="1" step="0.05" value="0.4" title="Radio Volume">
+                </div>
+
+                <!-- Achievements & Trophies -->
+                <button id="btnAchievements" class="action-btn" title="View 15 Achievements & Badges">
+                    <span>🏆</span>
+                    <span id="achievementsBtnLabel">0/15</span>
+                </button>
+
+                <!-- Arcade Leaderboards -->
+                <button id="btnLeaderboard" class="action-btn" title="Arcade Leaderboards & Rivals">
+                    <span>👑</span>
+                    <span>Ranks</span>
+                </button>
+
+                <!-- Gamepad HUD -->
+                <div id="gamepadIndicator" class="gamepad-indicator" title="Gamepad connected!">
+                    <span>🎮</span>
+                    <span>PAD</span>
+                </div>
+
                 <button id="btnSurprise" class="action-btn surprise-btn" title="Launch a random game!">
                     <span>🎲</span>
                     <span>Surprise Me</span>
@@ -126,6 +171,7 @@
             </div>
 
             <div class="theater-actions">
+                <button id="btnCrtToggle" class="theater-btn" title="Toggle CRT Arcade Monitor Scanlines & Bloom">📺 CRT: OFF</button>
                 <button id="btnReload" class="theater-btn" title="Restart Game">🔄 Restart</button>
                 <button id="btnFullscreen" class="theater-btn" title="Toggle Fullscreen">⛶ Fullscreen</button>
                 <a id="theaterTabLink" href="#" target="_blank" rel="noopener noreferrer" class="theater-btn" title="Open in Dedicated Tab">Full Tab ↗</a>
@@ -135,6 +181,7 @@
 
         <div class="theater-body">
             <div id="theaterIframeFrame" class="theater-iframe-frame">
+                <div id="crtOverlay" class="crt-overlay"></div>
                 <iframe id="theaterIframe" src="about:blank" class="theater-iframe" title="Game Viewport" allow="autoplay; fullscreen"></iframe>
             </div>
 
@@ -149,6 +196,45 @@
             </div>
         </div>
     </div>
+
+    <!-- Achievements & Trophies Modal -->
+    <div id="achievementsModal" class="cgz-modal-backdrop hidden">
+        <div class="cgz-modal">
+            <div class="cgz-modal-header">
+                <div class="cgz-modal-title">
+                    <span>🏆</span>
+                    <span>Hall of Trophies & Achievements</span>
+                </div>
+                <button id="btnCloseAchievements" class="cgz-modal-close" title="Close [Esc]">✕</button>
+            </div>
+            <div class="cgz-modal-body">
+                <div id="achievementsGrid" class="achievements-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Arcade Master Leaderboards Modal -->
+    <div id="leaderboardModal" class="cgz-modal-backdrop hidden">
+        <div class="cgz-modal">
+            <div class="cgz-modal-header">
+                <div class="cgz-modal-title">
+                    <span>👑</span>
+                    <span>Arcade Master Leaderboards</span>
+                </div>
+                <button id="btnCloseLeaderboard" class="cgz-modal-close" title="Close [Esc]">✕</button>
+            </div>
+            <div class="cgz-modal-body">
+                <div class="leaderboard-game-picker">
+                    <label for="leaderboardGameSelect" style="color: var(--text-muted); font-size: 0.88rem; font-weight: 600;">Select Game:</label>
+                    <select id="leaderboardGameSelect"></select>
+                </div>
+                <div id="leaderboardContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Toast Notification Container -->
+    <div id="achievementToastContainer" class="achievement-toast-container"></div>
 
     <!-- Portal Footer -->
     <footer class="portal-footer">

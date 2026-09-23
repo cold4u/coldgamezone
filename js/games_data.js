@@ -1,7 +1,117 @@
 /**
  * ColdGameZone - Comprehensive 29-Game Master Registry
- * Pure client-side data with categorization, tags, ratings, and controls.
+ * Pure client-side data with categorization, tags, ratings, controls,
+ * leaderboard seed records, and global achievements.
  */
+
+const ACHIEVEMENTS_DATA = [
+    {
+        id: "first_game",
+        title: "First Blood",
+        desc: "Launch and play your first game in ColdGameZone.",
+        icon: "🎮",
+        xp: 50
+    },
+    {
+        id: "speed_demon",
+        title: "Speed Demon",
+        desc: "Reach over 1,000 score in Turbo Drive or Cyber Drift.",
+        icon: "🏎️",
+        xp: 100
+    },
+    {
+        id: "apex_striker",
+        title: "Apex Striker",
+        desc: "Deliver a devastating K.O. in Cyber Brawler.",
+        icon: "🥊",
+        xp: 100
+    },
+    {
+        id: "ghost_infiltrator",
+        title: "Ghost Infiltrator",
+        desc: "Perform a silent stealth takedown in Ghost Protocol.",
+        icon: "🕵️",
+        xp: 120
+    },
+    {
+        id: "demolition_master",
+        title: "Demolition Master",
+        desc: "Detonate an enemy rival in Cyber Bomber.",
+        icon: "💣",
+        xp: 100
+    },
+    {
+        id: "pellet_devourer",
+        title: "Pellet Devourer",
+        desc: "Consume a Quantum Energizer and eat a frightened ghost in Quantum Maze.",
+        icon: "👾",
+        xp: 100
+    },
+    {
+        id: "grid_architect",
+        title: "Power Tycoon",
+        desc: "Reach 500+ Population in Cyber City Tycoon without blackouts.",
+        icon: "⚡",
+        xp: 150
+    },
+    {
+        id: "tetris_grandmaster",
+        title: "Tetris Grandmaster",
+        desc: "Clear rows and score 1,000+ points in Quantum Fall.",
+        icon: "🧱",
+        xp: 120
+    },
+    {
+        id: "cue_wizard",
+        title: "Cue Wizard",
+        desc: "Pocket the 9-ball to claim victory in Neon Pool.",
+        icon: "🎱",
+        xp: 120
+    },
+    {
+        id: "mech_commander",
+        title: "Mech Commander",
+        desc: "Systematically eliminate an enemy squad in Mech Warfare.",
+        icon: "🤖",
+        xp: 150
+    },
+    {
+        id: "deep_diver",
+        title: "Core Miner",
+        desc: "Drill into deep strata and extract Titanium or Quantum Core in Deep Core.",
+        icon: "⛏️",
+        xp: 120
+    },
+    {
+        id: "hole_in_one",
+        title: "Quantum Ace",
+        desc: "Sink a putt under par in Quantum Mini-Golf.",
+        icon: "⛳",
+        xp: 100
+    },
+    {
+        id: "swarm_survivor",
+        title: "Swarm Survivor",
+        desc: "Survive and level up 3 times in Cyber Survivor.",
+        icon: "🧬",
+        xp: 120
+    },
+    {
+        id: "arcade_veteran",
+        title: "Arcade Veteran",
+        desc: "Play 10 different games across the arcade catalog.",
+        icon: "⭐",
+        xp: 250
+    },
+    {
+        id: "cyber_legend",
+        title: "Cyber Legend",
+        desc: "Reach Player Profile Level 5.",
+        icon: "👑",
+        xp: 500
+    }
+];
+
 const GAMES_DATA = [
     {
         id: "turbo",
@@ -17,6 +127,15 @@ const GAMES_DATA = [
         path: "game/index.html",
         desc: "High-octane highway traffic weaving with 3 selectable cars, dynamic nitro boost bursts, unlimited rocket launchers, and synthesized engine rumble.",
         controls: "WASD / Arrows to Steer & Accelerate • Shift for Nitro • Space / F to Fire Rockets • Touch D-pad & Buttons on Mobile",
+        gamepadHint: "Left Stick / D-Pad: Steer • RT: Gas • LT: Brake • A: Rockets • X: Nitro",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "ApexRacer99", score: 6420 },
+            { name: "NitroQueen", score: 5180 },
+            { name: "V8Phantom", score: 4490 },
+            { name: "DriftKing_X", score: 3820 },
+            { name: "SpeedCyborg", score: 2950 }
+        ],
         tags: ["racing", "cars", "turbo", "action", "retro", "arcade", "speed"]
     },
     {
@@ -33,6 +152,15 @@ const GAMES_DATA = [
         path: "fighter/index.html",
         desc: "Competitive 2D arcade martial arts fighting game. Best 2 of 3 rounds featuring High Punches, Low Sweeping Kicks, Plasma Fireballs, 80% Guard Blocking, and lethal chip-out K.O. detection.",
         controls: "A/D Move • W Jump • J/Z Punch • K/X Kick • L/C Fireball • Hold Back to Guard Block • Full Touch Buttons",
+        gamepadHint: "D-Pad: Move • A: Kick • X: Punch • B / Y: Fireball",
+        leaderboardTarget: 3000,
+        rivals: [
+            { name: "IronFist_01", score: 4200 },
+            { name: "NeonShadow", score: 3500 },
+            { name: "KOBrawler", score: 2850 },
+            { name: "ValkyrieKick", score: 2100 },
+            { name: "DojoMaster", score: 1600 }
+        ],
         tags: ["action", "fighting", "fighter", "brawler", "combat", "versus", "pvp", "martial arts"]
     },
     {
@@ -49,6 +177,15 @@ const GAMES_DATA = [
         path: "stealth/index.html",
         desc: "Infiltrate high-security Arasaka vaults using dynamic 2D raycasted vision cones, patrolling cyborg sentries, silent takedowns from behind, terminal hacking, and blinking laser tripwire evasion.",
         controls: "WASD / Arrows to Move • Shift to Sprint (Noisy!) • C to Crouch (Stealthy) • Space / F for Takedown • Touch D-pad & Action buttons",
+        gamepadHint: "Left Stick: Move • RT: Sprint • LT: Crouch • A: Takedown / Hack",
+        leaderboardTarget: 4500,
+        rivals: [
+            { name: "ZeroTrace", score: 5800 },
+            { name: "ShadowOps", score: 4920 },
+            { name: "CipherNet", score: 3950 },
+            { name: "SilentGhost", score: 3100 },
+            { name: "Infiltrator9", score: 2400 }
+        ],
         tags: ["stealth", "action", "infiltrator", "hack", "espionage", "tactical"]
     },
     {
@@ -65,6 +202,15 @@ const GAMES_DATA = [
         path: "bomber/index.html",
         desc: "Classic Bomberman grid battle reimagined with 4-way cross blast flame propagation, chain reactions, destructible cyber-crates, powerup drops (+Bombs, +Fire, +Speed), and 3 adaptive bot cyborgs.",
         controls: "WASD / Arrows to Move • Space / Enter to Drop Bomb • Touch D-pad & Bomb Button",
+        gamepadHint: "D-Pad: Move • A: Drop Bomb",
+        leaderboardTarget: 4000,
+        rivals: [
+            { name: "BlastRadius", score: 4850 },
+            { name: "DynamoGrid", score: 3900 },
+            { name: "FuseMaster", score: 3250 },
+            { name: "NitroBot", score: 2700 },
+            { name: "DetonatorX", score: 1950 }
+        ],
         tags: ["bomber", "arcade", "bomberman", "explosions", "battle", "arena", "retro"]
     },
     {
@@ -81,6 +227,15 @@ const GAMES_DATA = [
         path: "pacman/index.html",
         desc: "Classic maze arcade navigation featuring responsive direction input buffering, horizontal warp tunnels, 4 distinct AI ghost personalities (Blinky, Pinky, Inky, Clyde), and Quantum Energizers for ghost eating multipliers.",
         controls: "WASD / Arrows to Steer • Touch D-pad on mobile",
+        gamepadHint: "D-Pad: Steer",
+        leaderboardTarget: 8000,
+        rivals: [
+            { name: "GhostChomper", score: 9800 },
+            { name: "MazeRunner_99", score: 7950 },
+            { name: "BlinkyHunter", score: 6800 },
+            { name: "QuantumArcade", score: 5400 },
+            { name: "WakaMaster", score: 4100 }
+        ],
         tags: ["pacman", "arcade", "maze", "ghosts", "classic", "retro", "chomp"]
     },
     {
@@ -97,6 +252,15 @@ const GAMES_DATA = [
         path: "tycoon/index.html",
         desc: "Deep cyberpunk metropolis simulation. Balance daylight solar generation, continuous fusion cores, battery banks, power conduit networks, citizen satisfaction, and tax collection across a 12x9 sector grid.",
         controls: "Click / Tap toolbar to select structure • Click sector to build or demolish • Space to restart",
+        gamepadHint: "Mouse / Touch recommended for building",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "MayorMatrix", score: 6200 },
+            { name: "GridArchitect", score: 5300 },
+            { name: "FusionCEO", score: 4400 },
+            { name: "NeonMetropolis", score: 3600 },
+            { name: "CityPlanner", score: 2800 }
+        ],
         tags: ["strategy", "tycoon", "simulation", "city", "power", "grid", "management"]
     },
     {
@@ -113,6 +277,15 @@ const GAMES_DATA = [
         path: "tetris/index.html",
         desc: "Authentic competitive falling block puzzle featuring standard 7-bag randomizer, Super Rotation System (SRS) with wall kicks, Ghost Piece projection, Hold slot, soft & hard drops, and 4-line TETRIS! multipliers.",
         controls: "Left/Right Move • Up/X Rotate CW • Z Rotate CCW • Down Soft Drop • Space Hard Drop • C/Shift Hold • Mobile touch controls",
+        gamepadHint: "D-Pad: Move/Soft Drop • A: Rotate CW • B: Rotate CCW • Up/Y: Hard Drop • LB/RB: Hold",
+        leaderboardTarget: 12000,
+        rivals: [
+            { name: "T-Spin_Grandmaster", score: 15400 },
+            { name: "BlockDropper", score: 12800 },
+            { name: "TetrisQueen", score: 10500 },
+            { name: "MatrixStacker", score: 8200 },
+            { name: "CyberLineClear", score: 6300 }
+        ],
         tags: ["tetris", "puzzle", "blocks", "falling", "retro", "arcade", "logic"]
     },
     {
@@ -129,6 +302,15 @@ const GAMES_DATA = [
         path: "billiards/index.html",
         desc: "Precision 9-ball pool with sub-stepped 4x physics, elastic impulse collisions, cushion reflections with spin friction, cue drag power regulation, and standard 9-ball tournament rules.",
         controls: "Click / Touch on cue ball & drag backward to aim and set power • Release to shoot",
+        gamepadHint: "Mouse / Touch drag recommended for cue aiming",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "FastEddie_Cyber", score: 6100 },
+            { name: "NineBallShark", score: 5200 },
+            { name: "ChalkMaster", score: 4300 },
+            { name: "TrickShot_X", score: 3500 },
+            { name: "NeonPocket", score: 2600 }
+        ],
         tags: ["pool", "billiards", "physics", "sports", "cue", "arcade", "8ball"]
     },
     {
@@ -145,6 +327,15 @@ const GAMES_DATA = [
         path: "tactics/index.html",
         desc: "Turn-based tactical mech combat on an 8x8 isometric grid. Command Vanguard Titan, Plasma Artillery, and Recon Scout against enemy cyborg swarms with telegraphed enemy intents and city pylon defense.",
         controls: "Click mech to select • Click green tile to move • Click red target to attack • Space / End Turn button",
+        gamepadHint: "Mouse / Touch recommended for tactical selection",
+        leaderboardTarget: 4000,
+        rivals: [
+            { name: "GeneralSteel", score: 5100 },
+            { name: "VanguardLead", score: 4250 },
+            { name: "ArtilleryCore", score: 3600 },
+            { name: "MechTactician", score: 2900 },
+            { name: "GridDefender", score: 2200 }
+        ],
         tags: ["tactics", "strategy", "mechs", "turnbased", "scifi", "combat", "grid"]
     },
     {
@@ -161,6 +352,15 @@ const GAMES_DATA = [
         path: "mining/index.html",
         desc: "Descend into subterranean planetary strata with your nano drill pod. Mine 5 valuable ore tiers, manage fuel and cargo capacity, surface at the refinery to cash in, and upgrade your pod at the workshop.",
         controls: "WASD / Arrows to Drill & Fly • E to Sell / Upgrade at Surface • Touch D-pad & Buttons",
+        gamepadHint: "Left Stick: Drill / Fly • A: Upgrade / Action",
+        leaderboardTarget: 6000,
+        rivals: [
+            { name: "TitaniumDriller", score: 7200 },
+            { name: "DeepMiner_88", score: 5900 },
+            { name: "QuantumExtractor", score: 4800 },
+            { name: "GoldExcavator", score: 3700 },
+            { name: "CoreExplorer", score: 2900 }
+        ],
         tags: ["mining", "adventure", "upgrades", "drill", "subterranean", "crafting"]
     },
     {
@@ -177,6 +377,15 @@ const GAMES_DATA = [
         path: "golf/index.html",
         desc: "Championship 9-hole mini-golf across cybernetic courses featuring quantum wormholes, speed booster acceleration strips, gravity vortices, stroke counters, and par scorecard tracking.",
         controls: "Click / Touch ball and drag backward to aim and power stroke • Release to putt",
+        gamepadHint: "Mouse / Touch drag recommended for putting",
+        leaderboardTarget: 3500,
+        rivals: [
+            { name: "PuttMaster_Pro", score: 4300 },
+            { name: "WormholeEagle", score: 3700 },
+            { name: "UnderParClub", score: 3100 },
+            { name: "GreenWizard", score: 2500 },
+            { name: "GolfTitan", score: 1900 }
+        ],
         tags: ["golf", "minigolf", "physics", "sports", "holes", "casual", "putting"]
     },
     {
@@ -193,6 +402,15 @@ const GAMES_DATA = [
         path: "survivor/index.html",
         desc: "Auto-firing Gatling cannons and orbital plasma drones versus overwhelming cyborg swarm waves. Collect XP crystals, choose dynamic perks on level-up, and defeat massive Omega Titan bosses.",
         controls: "WASD / Arrows to Move • Space / Enter to confirm upgrades • Touch controls on mobile",
+        gamepadHint: "Left Stick: Move • A: Select Perk",
+        leaderboardTarget: 15000,
+        rivals: [
+            { name: "SwarmBane", score: 18400 },
+            { name: "VampireSlayer99", score: 14900 },
+            { name: "OmegaBreaker", score: 11800 },
+            { name: "PlasmaSurvivor", score: 9200 },
+            { name: "DroneCommander", score: 7100 }
+        ],
         tags: ["action", "roguelite", "survivor", "swarm", "vampire", "auto-shooter", "bullet-hell"]
     },
     {
@@ -209,6 +427,15 @@ const GAMES_DATA = [
         path: "portal/index.html",
         desc: "Place Blue and Orange portals on conductive surfaces. Fling storage cubes through portals to preserve kinetic momentum, trigger pressure plates, disable laser grids, and escape test chambers.",
         controls: "A/D Move • W Jump • Left Click / Z Blue Portal • Right Click / X Orange Portal • E Grab Cube",
+        gamepadHint: "Left Stick: Move • A: Jump • RT: Blue Portal • LT: Orange Portal • X: Grab",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "ApertureAce", score: 6200 },
+            { name: "MomentumShift", score: 5100 },
+            { name: "PortalRunner", score: 4300 },
+            { name: "ChamberEscape", score: 3400 },
+            { name: "QuantumJumper", score: 2700 }
+        ],
         tags: ["puzzle", "portal", "physics", "momentum", "brain", "scifi", "chamber"]
     },
     {
@@ -225,6 +452,15 @@ const GAMES_DATA = [
         path: "rogue/index.html",
         desc: "Top-down dungeon crawler. Swap between Energy Katana and Cyber Shotgun, execute invulnerable dash-rolls through bullet hell patterns, clear procedural chambers, and defeat the Cyber Lich.",
         controls: "WASD Move • Mouse Aim & Click to Attack • Space Dash Roll • Q Swap Weapon",
+        gamepadHint: "Left Stick: Move • Right Stick: Aim • RT: Fire/Slash • LB: Dash • Y: Swap",
+        leaderboardTarget: 7000,
+        rivals: [
+            { name: "DungeonLichSlayer", score: 8400 },
+            { name: "KatanaReaper", score: 6900 },
+            { name: "CyberGungeon", score: 5600 },
+            { name: "DashRoller", score: 4400 },
+            { name: "VaultHunter", score: 3300 }
+        ],
         tags: ["rogue", "dungeon", "crawler", "action", "katana", "shotgun", "boss"]
     },
     {
@@ -241,6 +477,15 @@ const GAMES_DATA = [
         path: "tower/index.html",
         desc: "Protect the central power core by placing and upgrading Pulse Blasters, Cryo Freezers, Tesla Arc chain lightnings, and armor-piercing Railguns across tactical waypoints.",
         controls: "Click tower card to select • Click grid cell to place • Click existing tower to upgrade or sell",
+        gamepadHint: "Mouse / Touch recommended for placement",
+        leaderboardTarget: 6000,
+        rivals: [
+            { name: "CoreGuardian", score: 7300 },
+            { name: "TeslaTower_HQ", score: 6100 },
+            { name: "WaveBreaker", score: 4900 },
+            { name: "RailgunSniper", score: 3800 },
+            { name: "DefenseCommand", score: 2900 }
+        ],
         tags: ["strategy", "tower-defense", "defense", "grid", "waves", "tactics", "upgrade"]
     },
     {
@@ -257,6 +502,15 @@ const GAMES_DATA = [
         path: "kart/index.html",
         desc: "Retro Mode-7 style curved road racing with 3-tier power drift boost sparks, 5 aggressive AI rival racers, and battlefield weapon items (EMP shockwaves, homing drones, nitro boosts).",
         controls: "WASD / Arrows to Steer & Accelerate • Shift / Space to Power Drift • F to Fire Item",
+        gamepadHint: "Left Stick: Steer • RT: Gas • LT: Brake • A / RB: Drift • X: Use Item",
+        leaderboardTarget: 6000,
+        rivals: [
+            { name: "UltraDrift_01", score: 7100 },
+            { name: "GrandPrixStar", score: 5800 },
+            { name: "NeonCircuit", score: 4700 },
+            { name: "CurveRacer", score: 3700 },
+            { name: "DraftMaster", score: 2800 }
+        ],
         tags: ["racing", "kart", "drift", "outrun", "pseudo3d", "speed", "multiplayer"]
     },
     {
@@ -273,6 +527,15 @@ const GAMES_DATA = [
         path: "match/index.html",
         desc: "Match-3 puzzle combat. Align attack, mana, healing, and skull gems to build combo cascades and cast active spells (Flame Lance, Aegis Ward, Chrono Lock) against real-time boss turn attacks.",
         controls: "Click / Drag adjacent gems to swap • Click spell buttons when charged with mana",
+        gamepadHint: "Mouse / Touch drag recommended for gem swaps",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "Archmage_Void", score: 6200 },
+            { name: "GemCascade", score: 5100 },
+            { name: "SpellWeaver", score: 4200 },
+            { name: "ManaMaster", score: 3300 },
+            { name: "RuneKnight", score: 2500 }
+        ],
         tags: ["puzzle", "match3", "rpg", "spells", "gems", "combat", "alchemist"]
     },
     {
@@ -289,6 +552,15 @@ const GAMES_DATA = [
         path: "pinball/index.html",
         desc: "Authentic physics pinball simulation featuring dual flippers, spring plunger, 3 reactive pop bumpers, drop targets, bonus score multiplier ladder, and 3-ball Multiball chaos.",
         controls: "Z / Left Arrow Left Flipper • / or Right Arrow Right Flipper • Down Arrow Plunger • Space Nudge",
+        gamepadHint: "LT / LB: Left Flipper • RT / RB: Right Flipper • Down Stick: Plunger",
+        leaderboardTarget: 80000,
+        rivals: [
+            { name: "FlipperWizard", score: 98000 },
+            { name: "MultiballKing", score: 79000 },
+            { name: "BumperChamp", score: 64000 },
+            { name: "TiltMaster", score: 49000 },
+            { name: "Silverball_X", score: 35000 }
+        ],
         tags: ["pinball", "arcade", "physics", "flippers", "retro", "multiball", "table"]
     },
     {
@@ -305,6 +577,15 @@ const GAMES_DATA = [
         path: "shinobi/index.html",
         desc: "Lightning-fast ninja action. Double jumps, wall kicks, and an invincible air dash. Deflect incoming enemy bullets back at foes with precision katana strikes and defeat the Cyber Daimyo.",
         controls: "A/D Move • W Jump (Double Jump & Wall Jump) • J/Z Katana Slash / Bullet Deflect • K/X Air Dash",
+        gamepadHint: "Left Stick: Move • A: Jump • X: Katana Slash/Parry • B / RB: Air Dash",
+        leaderboardTarget: 6000,
+        rivals: [
+            { name: "DaimyoSlayer", score: 7400 },
+            { name: "KunoichiBlade", score: 6100 },
+            { name: "ShadowParry", score: 4900 },
+            { name: "WallKickNinja", score: 3900 },
+            { name: "NeonKunai", score: 2800 }
+        ],
         tags: ["action", "ninja", "katana", "parry", "platformer", "slasher", "combat"]
     },
     {
@@ -321,6 +602,15 @@ const GAMES_DATA = [
         path: "deck/index.html",
         desc: "Tactical card battles with a 3-energy economy. Read telegraphed enemy ICE intents, balance offensive malware exploits with defense firewalls, and draft new software programs into your deck.",
         controls: "Click card to select & click target/board to play • Click End Turn when finished",
+        gamepadHint: "Mouse / Touch recommended for card drafting",
+        leaderboardTarget: 4000,
+        rivals: [
+            { name: "ICE_Breaker_9", score: 5100 },
+            { name: "Netrunner_Zero", score: 4200 },
+            { name: "BlackProtocol", score: 3400 },
+            { name: "CyberSpire", score: 2700 },
+            { name: "CodeRunner", score: 2000 }
+        ],
         tags: ["strategy", "deckbuilder", "cards", "roguelike", "cyberdeck", "netrunner", "spire"]
     },
     {
@@ -337,6 +627,15 @@ const GAMES_DATA = [
         path: "flight/index.html",
         desc: "3D-perspective rail flight combat. Steer your starfighter across the screen, lock onto multiple drone targets with homing photon torpedoes, execute 360° defensive barrel rolls, and destroy the Valravn Dreadnought.",
         controls: "Mouse / WASD Flight Steer • Click / Space Twin Lasers • Hold Right Click Multi-Lock Torpedoes • Double tap A/D Barrel Roll",
+        gamepadHint: "Left Stick: Steer • A: Lasers • X / RT: Torpedo Lock • LB / RB: Barrel Roll",
+        leaderboardTarget: 7000,
+        rivals: [
+            { name: "StarFox_Ace", score: 8600 },
+            { name: "ValravnDown", score: 7100 },
+            { name: "TorpedoStrike", score: 5800 },
+            { name: "SkySniper", score: 4400 },
+            { name: "AeroPilot", score: 3200 }
+        ],
         tags: ["action", "flight", "starfox", "rail-shooter", "space", "combat", "boss"]
     },
     {
@@ -353,6 +652,15 @@ const GAMES_DATA = [
         path: "puzzle/index.html",
         desc: "Connect pairs of matching neon terminals without crossing wire paths. Features 30 handcrafted levels with increasing grid complexity plus an infinite algorithmic puzzle generator.",
         controls: "Click / Drag mouse or finger between matching colored nodes to link circuits",
+        gamepadHint: "Mouse / Touch drag recommended",
+        leaderboardTarget: 3000,
+        rivals: [
+            { name: "LogicFlow99", score: 3800 },
+            { name: "CircuitBreaker", score: 3100 },
+            { name: "WireMaster", score: 2500 },
+            { name: "NeonLinker", score: 1900 },
+            { name: "PuzzleGenius", score: 1400 }
+        ],
         tags: ["puzzle", "logic", "connect", "circuits", "flow", "brain", "neon"]
     },
     {
@@ -369,6 +677,15 @@ const GAMES_DATA = [
         path: "breaker/index.html",
         desc: "Shatter high-density neon brick formations with realistic angle deflections, multi-ball split powerups, paddle laser cannons, and explosive brick cascades.",
         controls: "Mouse / Touch or Left/Right Arrow keys to position paddle • Space to launch ball",
+        gamepadHint: "Left Stick / D-Pad: Paddle • A: Launch Ball",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "ArkanoidPro", score: 6200 },
+            { name: "BrickCrusher", score: 5100 },
+            { name: "LaserPaddle", score: 4200 },
+            { name: "MultiBaller", score: 3300 },
+            { name: "NeonRicochet", score: 2400 }
+        ],
         tags: ["arcade", "breakout", "arkanoid", "bricks", "paddle", "classic", "retro"]
     },
     {
@@ -385,6 +702,15 @@ const GAMES_DATA = [
         path: "strike/index.html",
         desc: "Classic vertical scrolling space shmup. Weave through hypnotic bullet patterns, collect 5 weapon upgrade levels (spread shot, plasma laser, homing missiles), and deploy full-screen EMP bombs.",
         controls: "Mouse / Arrow keys to move ship • Auto-fire enabled • Space / B to trigger EMP bomb",
+        gamepadHint: "Left Stick: Move • A: Auto-Fire • B: EMP Bomb",
+        leaderboardTarget: 10000,
+        rivals: [
+            { name: "ShmupGod_JP", score: 12500 },
+            { name: "BulletHellAce", score: 10200 },
+            { name: "PlasmaStorm", score: 8400 },
+            { name: "EMPBomber", score: 6700 },
+            { name: "GalaxyFighter", score: 5100 }
+        ],
         tags: ["action", "shmup", "bullet-hell", "space", "shooter", "retro", "arcade"]
     },
     {
@@ -401,6 +727,15 @@ const GAMES_DATA = [
         path: "snake/index.html",
         desc: "Classic snake gameplay elevated with neon vector visuals, speed multiplier powerups, ghost wall-phasing mode, and smooth grid collision handling.",
         controls: "WASD / Arrow Keys or Swipe on Touchscreen to change direction",
+        gamepadHint: "D-Pad: Change Direction",
+        leaderboardTarget: 500,
+        rivals: [
+            { name: "SerpentKing", score: 680 },
+            { name: "NeonPython", score: 540 },
+            { name: "GhostSlither", score: 430 },
+            { name: "GridViper", score: 320 },
+            { name: "SnakeChaser", score: 210 }
+        ],
         tags: ["arcade", "snake", "classic", "retro", "casual", "food", "high-score"]
     },
     {
@@ -417,6 +752,15 @@ const GAMES_DATA = [
         path: "jump/index.html",
         desc: "Doodle-jump style infinite vertical ascent. Navigate moving neon platforms, spring coils for massive leap boosts, crumbling platforms, and horizontal screen wrap-around.",
         controls: "A/D or Left/Right Arrow keys to steer • Tilt / Touch controls on mobile",
+        gamepadHint: "Left Stick / D-Pad: Steer",
+        leaderboardTarget: 4000,
+        rivals: [
+            { name: "SkyHigh_99", score: 5100 },
+            { name: "SpringLeaper", score: 4200 },
+            { name: "QuantumBouncer", score: 3400 },
+            { name: "DoodleNinja", score: 2600 },
+            { name: "AscentHero", score: 1900 }
+        ],
         tags: ["adventure", "platformer", "jump", "infinite", "arcade", "spring", "casual"]
     },
     {
@@ -433,6 +777,15 @@ const GAMES_DATA = [
         path: "pulse/index.html",
         desc: "Fast-paced 4-lane rhythm action game with synchronized procedural synthwave audio. Hit descending notes on the beat line to chain combo multipliers and reach SSS rank.",
         controls: "D, F, J, K keys or Touch the 4 lane buttons when notes cross the target bar",
+        gamepadHint: "LB, LT, RT, RB: 4 Lanes",
+        leaderboardTarget: 6000,
+        rivals: [
+            { name: "SynapseHero", score: 7300 },
+            { name: "BeatsMaster", score: 6100 },
+            { name: "ComboBreaker_X", score: 4900 },
+            { name: "SynthWavePro", score: 3800 },
+            { name: "RhythmDancer", score: 2700 }
+        ],
         tags: ["rhythm", "music", "tap", "synthwave", "beats", "audio", "arcade"]
     },
     {
@@ -449,6 +802,15 @@ const GAMES_DATA = [
         path: "runner/index.html",
         desc: "High-speed endless running with instantaneous gravity inversion. Flip between floor and ceiling to dodge laser barriers, spikes, and gap hazards while speed continuously scales.",
         controls: "Space / Click / Touch to invert gravity • Collect neon shards for shields",
+        gamepadHint: "A / Space: Invert Gravity",
+        leaderboardTarget: 3000,
+        rivals: [
+            { name: "GravityZero", score: 3900 },
+            { name: "InversionRunner", score: 3200 },
+            { name: "LaserDodger", score: 2500 },
+            { name: "FloorCeilingFlip", score: 1900 },
+            { name: "NeonSprinter", score: 1400 }
+        ],
         tags: ["runner", "gravity", "speed", "endless", "reflex", "racing", "arcade"]
     },
     {
@@ -465,15 +827,23 @@ const GAMES_DATA = [
         path: "defense/index.html",
         desc: "360-degree orbital defense. Rotate your shield and turret to intercept incoming missile swarms from all directions, deploy energy blasts, and safeguard the planet core.",
         controls: "Mouse cursor / Touch to rotate shield & aim • Click to shoot • Space for EMP",
+        gamepadHint: "Right Stick: Aim 360° • RT: Shoot • B: EMP",
+        leaderboardTarget: 5000,
+        rivals: [
+            { name: "ShieldGeneral", score: 6200 },
+            { name: "OrbitalAce", score: 5100 },
+            { name: "MissileIntercepter", score: 4200 },
+            { name: "CoreProtector", score: 3200 },
+            { name: "PlanetShield", score: 2300 }
+        ],
         tags: ["defense", "action", "turret", "orbital", "arcade", "missiles", "shield"]
     }
 ];
 
-// Helper to get game by ID
 function getGameById(id) {
     return GAMES_DATA.find(g => g.id === id) || null;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { GAMES_DATA, getGameById };
+    module.exports = { GAMES_DATA, ACHIEVEMENTS_DATA, getGameById };
 }

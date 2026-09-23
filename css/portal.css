@@ -947,10 +947,500 @@ body {
   align-items: center;
   gap: 12px;
 }
+/* ==========================================================================
+   Player Profile & Progression HUD
+   ========================================================================== */
+.player-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(16, 24, 43, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.12);
+  transition: all var(--transition-fast);
+}
+
+.player-profile-card:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.3);
+}
+
+.player-lvl-badge {
+  background: linear-gradient(135deg, #00f0ff, #7928ca);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.72rem;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+  white-space: nowrap;
+}
+
+.player-xp-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 80px;
+}
+
+.player-xp-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.player-xp-bar-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.player-xp-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f0ff, #39ff14);
+  border-radius: var(--radius-full);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px #00f0ff;
+}
+
+/* ==========================================================================
+   Cyber Synthwave Radio Player Widget
+   ========================================================================== */
+.synthwave-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 21, 39, 0.9);
+  border: 1px solid rgba(255, 0, 85, 0.3);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  transition: all var(--transition-fast);
+}
+
+.synthwave-radio:hover {
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 14px rgba(255, 0, 85, 0.25);
+}
+
+.radio-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  width: 16px;
+}
+
+.radio-bar {
+  width: 3px;
+  height: 3px;
+  background: var(--accent-pink);
+  border-radius: 1px;
+  transition: height 0.15s ease;
+}
+
+.synthwave-radio.playing .radio-bar:nth-child(1) { animation: radioPulse 0.6s infinite alternate ease-in-out; }
+.synthwave-radio.playing .radio-bar:nth-child(2) { animation: radioPulse 0.45s infinite alternate ease-in-out 0.1s; }
+.synthwave-radio.playing .radio-bar:nth-child(3) { animation: radioPulse 0.7s infinite alternate ease-in-out 0.2s; }
+.synthwave-radio.playing .radio-bar:nth-child(4) { animation: radioPulse 0.5s infinite alternate ease-in-out 0.05s; }
+
+@keyframes radioPulse {
+  0% { height: 3px; }
+  100% { height: 14px; }
+}
+
+.radio-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.radio-btn:hover {
+  transform: scale(1.15);
+  color: var(--accent-pink);
+}
+
+.radio-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--accent-pink);
+  white-space: nowrap;
+}
+
+.radio-vol {
+  width: 44px;
+  accent-color: var(--accent-pink);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Gamepad HUD Indicator
+   ========================================================================== */
+.gamepad-indicator {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: rgba(57, 255, 20, 0.12);
+  border: 1px solid rgba(57, 255, 20, 0.4);
+  color: #39ff14;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.gamepad-indicator.active {
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   CRT Arcade Monitor Shader Overlays
+   ========================================================================== */
+.theater-iframe-frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 3px, 6px 100%;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 240, 255, 0.2);
+}
+
+.crt-active .crt-overlay {
+  display: block;
+  animation: crtFlicker 0.15s infinite;
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 0.96; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+.theater-btn.active {
+  background: var(--accent-cyan) !important;
+  color: #040914 !important;
+  font-weight: 800;
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+/* ==========================================================================
+   Modals: Leaderboards & Achievements
+   ========================================================================== */
+.cgz-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 5, 12, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.cgz-modal-backdrop.hidden {
+  display: none !important;
+}
+
+.cgz-modal {
+  background: #090e1c;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 740px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(0, 240, 255, 0.2);
+  overflow: hidden;
+}
+
+.cgz-modal-header {
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13, 21, 39, 0.6);
+}
+
+.cgz-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+.cgz-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.cgz-modal-close:hover {
+  color: var(--accent-pink);
+}
+
+.cgz-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Leaderboard Specifics */
+.leaderboard-game-picker {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leaderboard-game-picker select {
+  flex: 1;
+  background: rgba(16, 24, 43, 0.95);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.leaderboard-table th {
+  padding: 10px 14px;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.leaderboard-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.leaderboard-table tr.user-row td {
+  background: rgba(0, 240, 255, 0.12);
+  font-weight: 800;
+  color: var(--accent-cyan);
+  border-top: 1px solid var(--accent-cyan);
+  border-bottom: 1px solid var(--accent-cyan);
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.rank-1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; box-shadow: 0 0 10px #ffd700; }
+.rank-2 { background: linear-gradient(135deg, #e0e0e0, #9e9e9e); color: #000; }
+.rank-3 { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
+.rank-other { color: var(--text-muted); }
+
+/* Achievements Specifics */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.achievement-card {
+  background: rgba(16, 24, 43, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.achievement-card.unlocked {
+  border-color: rgba(57, 255, 20, 0.4);
+  background: rgba(20, 36, 32, 0.8);
+  box-shadow: 0 0 14px rgba(57, 255, 20, 0.15);
+}
+
+.achievement-card.locked {
+  opacity: 0.55;
+  filter: grayscale(0.8);
+}
+
+.achievement-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.achievement-icon {
+  font-size: 1.8rem;
+}
+
+.achievement-xp {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 240, 255, 0.2);
+  color: var(--accent-cyan);
+}
+
+.achievement-title {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: #fff;
+}
+
+.achievement-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.achievement-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: auto;
+  color: #39ff14;
+}
+
+.achievement-card.locked .achievement-status {
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   Achievement Unlock Toast Notification
+   ========================================================================== */
+.achievement-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.achievement-toast {
+  pointer-events: auto;
+  background: linear-gradient(135deg, #091224, #120b22);
+  border: 1px solid var(--accent-cyan);
+  border-left: 4px solid var(--accent-green);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.3);
+  animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 340px;
+}
+
+@keyframes toastSlideIn {
+  0% { transform: translateX(100%) scale(0.9); opacity: 0; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+.achievement-toast-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.achievement-toast-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.achievement-toast-tag {
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  color: #39ff14;
+  text-transform: uppercase;
+}
+
+.achievement-toast-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.achievement-toast-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
 
 /* ==========================================================================
    Responsive Adaptations
    ========================================================================== */
+@media (max-width: 1100px) {
+  .header-container {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .search-box {
+    order: 3;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 @media (max-width: 900px) {
   .hero-spotlight {
     grid-template-columns: 1fr;
@@ -980,5 +1470,12 @@ body {
   }
   .theater-iframe-frame {
     max-height: 55vh;
+  }
+  .player-profile-card .player-xp-wrap {
+    display: none;
+  }
+  .synthwave-radio .radio-vol,
+  .synthwave-radio .radio-label {
+    display: none;
   }
 }
