@@ -831,23 +831,70 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 16px;
+  padding: 10px 16px 20px 16px;
   overflow-y: auto;
-  gap: 16px;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .theater-iframe-frame {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  aspect-ratio: 4 / 3;
-  max-height: 75vh;
+  max-width: 1080px;
+  height: calc(100vh - 120px);
+  min-height: 480px;
+  max-height: 82vh;
   background: #000;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 2px solid rgba(0, 240, 255, 0.3);
-  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.2);
+  border: 2px solid rgba(0, 240, 255, 0.35);
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: max-width 0.25s ease, height 0.25s ease;
+}
+
+/* Orientation Presets */
+.theater-iframe-frame.frame-portrait {
+  max-width: 520px;
+  height: calc(100vh - 110px);
+}
+
+.theater-iframe-frame.frame-square {
+  max-width: 680px;
+  height: calc(100vh - 110px);
+}
+
+.theater-iframe-frame.frame-landscape {
+  max-width: 1040px;
+  height: calc(100vh - 120px);
+}
+
+.theater-iframe-frame.frame-widescreen {
+  max-width: 1240px;
+  height: calc(100vh - 120px);
+}
+
+/* Maximized Cinema View (Fills 98% of window) */
+.theater-modal.maximized .theater-header {
+  padding: 8px 16px;
+}
+
+.theater-modal.maximized .theater-body {
+  padding: 4px 10px 8px 10px;
+}
+
+.theater-modal.maximized .theater-iframe-frame {
+  max-width: 98vw !important;
+  height: calc(100vh - 74px) !important;
+  max-height: 94vh !important;
+  border-radius: 4px;
+}
+
+.theater-modal.maximized .theater-details-card {
+  display: none !important;
 }
 
 .theater-iframe {
@@ -859,14 +906,14 @@ body {
 
 .theater-details-card {
   width: 100%;
-  max-width: 900px;
+  max-width: 1080px;
   background: rgba(13, 21, 39, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
-  padding: 18px 24px;
+  padding: 16px 22px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .theater-controls-guide strong {

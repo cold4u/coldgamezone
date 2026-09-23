@@ -357,6 +357,7 @@ class ColdGameZonePortal {
         this.theaterDesc = document.getElementById('theaterDesc');
         this.theaterSimilar = document.getElementById('theaterSimilar');
         this.btnCrtToggle = document.getElementById('btnCrtToggle');
+        this.btnTheaterExpand = document.getElementById('btnTheaterExpand');
         this.crtOverlay = document.getElementById('crtOverlay');
 
         // Action Buttons
@@ -443,6 +444,14 @@ class ColdGameZonePortal {
 
         if (this.btnReload) {
             this.btnReload.addEventListener('click', () => this.reloadGame());
+        }
+
+        if (this.btnTheaterExpand) {
+            this.btnTheaterExpand.addEventListener('click', () => {
+                this.theaterModal.classList.toggle('maximized');
+                const isMax = this.theaterModal.classList.contains('maximized');
+                this.btnTheaterExpand.textContent = isMax ? '🗗 Standard' : '🗖 Maximize';
+            });
         }
 
         // CRT Shader Toggle
@@ -1105,7 +1114,26 @@ class ColdGameZonePortal {
             </button>
         `).join('');
 
-        // Set iframe source with cache buster
+        // Configure responsive frame orientation
+        const portraitGames = new Set(['game', 'breaker', 'strike', 'jump', 'pulse', 'match', 'tetris']);
+        const squareGames = new Set(['defense', 'snake', 'rogue', 'survivor']);
+        const widescreenGames = new Set(['runner', 'flight', 'kart', 'tycoon', 'tactics', 'deck']);
+
+        if (this.theaterIframeFrame) {
+            this.theaterIframeFrame.classList.remove('frame-portrait', 'frame-square', 'frame-landscape', 'frame-widescreen');
+            if (portraitGames.has(gameId)) {
+                this.theaterIframeFrame.classList.add('frame-portrait');
+            } else if (squareGames.has(gameId)) {
+                this.theaterIframeFrame.classList.add('frame-square');
+            } else if (widescreenGames.has(gameId)) {
+                this.theaterIframeFrame.classList.add('frame-widescreen');
+            } else {
+                this.theaterIframeFrame.classList.add('frame-landscape');
+            }
+        }
+
+        // Set iframe source with cache buster and auto-fit styles on load
+        this.theaterIframe.onload = () => this.injectAutoFitStyles();
         this.theaterIframe.src = game.path + '?t=' + Date.now();
 
         // Reveal modal
@@ -1115,6 +1143,89 @@ class ColdGameZonePortal {
         // Update URL hash
         if (window.location.hash !== `#play/${gameId}`) {
             history.pushState(null, '', `#play/${gameId}`);
+        }
+    }
+
+    injectAutoFitStyles() {
+        try {
+            const doc = this.theaterIframe.contentDocument;
+            if (!doc) return;
+
+            let style = doc.getElementById('cgz-auto-fit-style');
+            if (!style) {
+                style = doc.createElement('style');
+                style.id = 'cgz-auto-fit-style';
+                (doc.head || doc.documentElement).appendChild(style);
+            }
+
+            style.textContent = `
+                html, body {
+                    width: 100% !important;
+                    height: 100% !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    overflow: hidden !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    background: #05070a !important;
+                }
+                header, .logo, .header-actions, .portal-header, 
+                .instructions-card, .instructions-panel, .instructions-container,
+                .btn-back-hub, a[href*="index.html"] {
+                    display: none !important;
+                }
+                #game-container, .game-container, main, .game-wrapper, #main-container {
+                    width: 100% !important;
+                    height: 100% !important;
+                    max-width: 100% !important;
+                    max-height: 100% !important;
+                    margin: 0 !important;
+                    padding: 2px !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    overflow: hidden !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                    background: transparent !important;
+                }
+                .canvas-container {
+                    width: 100% !important;
+                    height: 100% !important;
+                    max-height: 100% !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                }
+                canvas, #gameCanvas, .game-canvas, #runnerCanvas, #flightCanvas, 
+                #breakerCanvas, #strikeCanvas, #defenseCanvas, #jumpCanvas, 
+                #pulseCanvas, #rogueCanvas, #snakeCanvas, #survivorCanvas, 
+                #towerCanvas, #portalCanvas {
+                    max-width: 100% !important;
+                    max-height: calc(100vh - 6px) !important;
+                    width: auto !important;
+                    height: auto !important;
+                    object-fit: contain !important;
+                    box-shadow: none !important;
+                }
+                .touch-controls, .controls-bar, .d-pad, .action-pad {
+                    max-height: 95px !important;
+                    flex-shrink: 0 !important;
+                    margin-top: 2px !important;
+                    padding: 2px !important;
+                }
+                body:has(.touch-controls) canvas,
+                body:has(.controls-bar) canvas {
+                    max-height: calc(100vh - 105px) !important;
+                }
+            `;
+        } catch (e) {
+            console.warn('Same-origin iframe style auto-fit error:', e);
         }
     }
 
